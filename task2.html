@@ -54,8 +54,14 @@
     var lim = document.getElementsByClassName("lim")[0];
     var childs = lim.childNodes;
     in2.onclick = function(){
+
         var value = in1.value;
         var time = new Date().getTime();
+        for(var i = 0;i<localStorage.length;i++){
+            if(localStorage.getItem(localStorage.key(i)) == value){
+                localStorage.removeItem(key(i));
+            }
+        }
         localStorage.setItem(time,value);
         var bu = document.createElement("button");
         bu.innerHTML = value;
@@ -69,6 +75,14 @@
                 lim.removeChild(childs[i]);
             }
         }
+    }
+    for(var i=0;i<localStorage.length;i++){
+        var a = localStorage.key(i);
+        var key = localStorage.getItem(a);
+        var bu = document.createElement("button");
+        bu.innerHTML = key;
+        bu.setAttribute("class","yangshi")
+        lim.appendChild(bu);
     }
 </script>
 </html>
