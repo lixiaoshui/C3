@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>task2</title>
+    <style>
+        .input1{
+            height:40px;
+            width: 200px;
+            margin-left: 10px;
+            margin-top:10px;
+        }
+        .out{
+            height: 200px;
+            width: 350px;
+            border: 1px solid grey;
+        }
+        .input2{
+            height: 40px;
+            width: 120px;
+            color: gray;
+        }
+        .span1{
+            margin-left: 10px;
+        }
+        .input3{
+            margin-left: 300px;
+            color: white;
+            border: 0px;
+        }
+        .yangshi{
+            margin-left: 10px;
+            margin-top: 10px;
+            border: 1px solid grey;
+            font-size:16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="out">
+        <input type="text" name="text" placeholder="请输入想查找的商品" class="input1">
+        <input type="button" value="搜索" class="input2">
+        <span class="span1">最近搜索</span>
+        <div class="lim"></div>
+        <button class="input3">X</button>
+    </div>
+</body>
+<script>
+    var in1 = document.getElementsByClassName("input1")[0];
+    var in2 = document.getElementsByClassName("input2")[0];
+    var in3 = document.getElementsByClassName("input3")[0];
+    var lim = document.getElementsByClassName("lim")[0];
+    var childs = lim.childNodes;
+    in2.onclick = function(){
+        var value = in1.value;
+        var time = new Date().getTime();
+        localStorage.setItem(time,value);
+        var bu = document.createElement("button");
+        bu.innerHTML = value;
+        bu.setAttribute("class","yangshi")
+        lim.appendChild(bu);
+    }
+    in3.onclick = function(){
+        if(window.confirm("是要全部清除吗？")){
+            localStorage.clear();
+            for(var i = childs.length -1 ;i >= 0;i--){
+                lim.removeChild(childs[i]);
+            }
+        }
+    }
+</script>
+</html>
