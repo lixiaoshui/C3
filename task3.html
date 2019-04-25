@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas</title>
+</head>
+<style>
+    div{
+        width: 200px;
+        height: 50px;
+        color: red;
+        position: absolute;
+        text-align: center;
+        font-size: 40px;
+        line-height: 50px;
+        margin-top: 25px;
+    }
+    #canvas{
+        position: absolute;
+    }
+</style>
+<body>
+    <div id='div'></div>
+    <canvas id="canvas" width="200" height="100"></canvas>
+    <script>
+        var div = document.getElementById('div');
+        var write = new Array('一等奖','二等奖','三等奖');
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        div.innerHTML = write[parseInt(Math.random()*3)]; 
+        context.fillStyle = 'gray';
+        context.fillRect(0,0,200,100);
+        context.globalCompositeOperation = 'destination-out';
+        canvas.onmouseup=function(){
+            canvas.onmousemove=function(){
+                
+            }
+        }
+        canvas.onmousedown = function(){
+            canvas.onmousemove=function(e){
+                var ev = ev || event;
+                var x = ev.clientX;
+                var y = ev.clientY;
+                event.preventDefault();  
+                context.beginPath();
+                context.arc(x - canvas.offsetLeft,y - canvas.offsetTop,10,0,2*Math.PI);
+                context.closePath();
+                context.fillStyle="white";
+                context.fill();
+                var imgData = context.getImageData(0, 0, 200, 100);
+                var data = imgData.data;
+                var length = data.length;
+                var transparent = 0;
+                for(var i=0;i<length;i+=4){
+                    var alpha = data[i + 3];
+                    if(alpha<10){
+                        transparent++;
+                    }
+                }
+                var percentage = transparent/(length/4);
+                if(percentage>0.85){
+                    context.clearRect(0,0,200,100);
+                }
+            };
+        }
+    </script>
+</body>
+</html>
